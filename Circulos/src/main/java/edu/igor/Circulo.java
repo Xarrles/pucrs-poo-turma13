@@ -32,7 +32,7 @@ public class Circulo{
     }
 
     public double Area(){
-        double area = 3.14 * this.raio * this.raio;
+        double area = Math.PI * Math.pow(raio, 2);
         //System.out.print("Area do ciruclo é: " +  area);
 
         return area;
