@@ -16,7 +16,7 @@ public class Ponto{
 
     @Override
     public String toString(){
-        return "X: " + coordX + " Y: " + coordY + " Raio: ";
+        return "X: " + coordX + " Y: " + coordY;
     }
 
     public void Mover(double x, double y){
