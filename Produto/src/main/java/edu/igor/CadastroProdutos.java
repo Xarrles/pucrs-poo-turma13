@@ -24,9 +24,4 @@ public class CadastroProdutos{
     private CadastroProdutos(){
         listaProd = new ArrayList<>();
     }
-
-    public void cadastror(Produto p){
-        listaProd = p;
-    }
-
 }
