@@ -1,32 +1,39 @@
 package edu.igor;
 
 public class Cliente {
+    private int codigo;
     private String nome;
-    private String codigo;
+    private String endereco;
 
-    public Cliente(String nome, String codigo){
-        this.nome = nome;
+    public Cliente(int codigo, String nome, String endereco) {
         this.codigo = codigo;
-    }
-
-    public void Pessoa(String nome, String cpf){
         this.nome = nome;
-        this.codigo = cpf;
+        this.endereco = endereco;
     }
 
-    public String getNome(){
-        return this.nome;
+    public int getCodigo() {
+        return codigo;
     }
 
-    public String getCodigo(){
-        return this.codigo;
+    public String getNome() {
+        return nome;
+    }
+
+    public String getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
     }
 
     @Override
-    public String toString(){
-        return String.format("%s %s",
-                            this.nome,
-                            this.codigo);
+    public String toString() {
+        return String.format("%3d / %-10s / %15s",
+                                this.codigo,
+                                this.nome,
+                                this.endereco);
     }
+    
+    
 }
-
