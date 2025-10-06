@@ -2,21 +2,41 @@ package edu.igor;
 
 public abstract class Imovel {
     private String proprietario;
-    private Double areaConstruido;
+    private int areaConstruida;
+    private Geo geoLocalizacao;
 
-    public Imovel(String proprietario, double areaConstruido) {
-        this.proprietario = proprietario;
-        this.areaConstruido = areaConstruido;
+    private static double VR;
+
+    public static void setVR(double valor) {
+        VR = valor;
     }
 
-    public String getProprietario() {
-        return this.proprietario;
+    public static double getVR() {
+        return VR;
     }
 
-    public abstract double calcularImposto();
+    public Imovel(String propr, int area, Geo geoLoc) {
+        if (propr == null || propr == "" )
+            throw new IllegalArgumentException("nome nao pode ser null");
+        this.proprietario = propr;
+        this.areaConstruida = area;
+        this.geoLocalizacao = geoLoc;
+    }
 
-    @Override
+    public int getAreaConstruida(){
+        return areaConstruida;
+    }
+
+    public String getProprietario(){
+        return proprietario;
+    }
+
+    public abstract double calculaImposto();
+
     public String toString() {
-        return "Proprietario: " + this.proprietario + " Area Construido:" + this.areaConstruido;
+        return String.format("Proprietario: %s  Imposto: R$ %.2f",
+                                this.proprietario,
+                                this.calculaImposto());
+
     }
 }
