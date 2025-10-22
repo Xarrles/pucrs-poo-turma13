@@ -1,11 +1,10 @@
 package edu.igor;
 
 public class Pessoa {
-
-    private final int codigo;
-    private final String nome;
-    private final Departamento dpto;
-    private final int idade;
+    private int codigo;
+    private String nome;
+    private Departamento dpto;
+    private int idade;
 
     public Pessoa(int umCodigo, String umNome, Departamento umDpto, int umaIdade) {
         codigo = umCodigo;
@@ -26,20 +25,21 @@ public class Pessoa {
         return nome;
     }
 
+   public void setNome(String novoNome) {
+        this.nome = novoNome;
+    }
+
     public Departamento getDpto() {
         return dpto;
     }
 
     @Override
     public String toString() {
-        /*return "Pessoa{" +
+        return "Pessoa{" +
                 "codigo=" + codigo +
                 ", nome='" + nome + '\'' +
                 ", dpto=" + dpto +
                 ", idade=" + idade +
                 '}';
-        */        
-        return String.format( "Pessoa{ %3d - %-15s - %-15s - %3d }",
-                              codigo, nome, dpto.toString(), idade);
     }
 }

@@ -3,8 +3,7 @@ package edu.igor;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
-
+import java.util.OptionalDouble;
 
 public class App {
 
@@ -26,112 +25,82 @@ public class App {
                  new Pessoa(13, "Neo", Departamento.GERENCIA, 29)
         );
 
-        System.out.println("\n\n");
-        System.out.println("\nOrdenado pela idade");    
-        lista = lista.stream()  
-                //sorted( (Pessoa p1, Pessoa p2) -> p1.getIdade() - p2.getIdade())
-                .sorted( Comparator.comparing( Pessoa::getIdade ))
+        /***
+         * Exercício
+         *      - escreva as consultas solicitadas utilizando
+         *        apenas expressões lambda e operações de agregação
+          */
+        System.out.println("\n1. Funcionários do setor de vendas:");
+        List<Pessoa> nova1 = lista.stream() 
+                .filter( p -> p.getDpto() == Departamento.VENDAS)
                 .toList();
 
-                
-        lista.forEach( System.out::println );
+        nova1.forEach(System.out::println);
 
+        System.out.println("\n2. Funcionários do setor de vendas com idade entre 20 e 30 anos");
+        List<Pessoa> nova2 = lista.stream() 
+                .filter(p -> p.getIdade() <= 30 && p.getIdade() >=20)
+                .toList();
 
+        nova2.forEach(System.out::println);
 
-        System.out.println("\n\n");
-        System.out.println("\nOrdenado pelo departamento (e ordem alfabética)");
-        List<Pessoa> nova = lista.stream()  
-                      .filter( p-> p.getIdade() <= 40)
-                      .sorted(Comparator.comparing( Pessoa::getDpto )
-                                        .thenComparing( Pessoa::getNome )
-                                        .reversed()
-                              )   
-                      .collect(Collectors.toList());
+        System.out.println("\n3. Nomes (em maiúsculas) dos funcionários do setor de vendas");
+        List<Pessoa> nova3 = lista.stream()
+                                  .filter(p -> p.getDpto() == Departamento.VENDAS)
+                                  .map( (Pessoa x) -> { x.setNome( x.getNome().toUpperCase() );
+                                                        return x; })
+                                  .toList();
 
-        nova.forEach(System.out::println);
+        nova3.forEach(System.out::println);
+      //  lista.forEach(System.out::println);
 
+        System.out.println("\n4. Todos os gerentes:");
+        List<Pessoa> nova4 = lista.stream()
+                .filter(p -> p.getDpto() == Departamento.GERENCIA)
+                .toList();
 
+        nova4.forEach(System.out::println);
 
+        System.out.println("\n5. Idade média dos gerentes:");
+        OptionalDouble nova5 = lista.stream()
+                                    .filter(p -> p.getDpto() == Departamento.X)
+                                    .mapToInt(x -> x.getIdade())
+                                    .average();
         
+        System.out.println(nova5);
 
-       //List<Pessoa> novinhos = new ArrayList<>(); 
-       //for (Pessoa p : lista) 
-        //   if (p.getIdade() < 30)
-        //      novinhos.add(p);
-
-       List<Pessoa> novinhos = lista.stream()
-                                    .filter((Pessoa p) -> p.getIdade() < 30)
-                                    .collect(Collectors.toList());
+        System.out.println("\n6. Funcionarios ordenados pelo código:");
+        List<Pessoa> nova6 = lista.stream()
+                                  .sorted(Comparator.comparing(Pessoa:: getCodigo))
+                                  .toList();
         
-        //for (Pessoa p : novinhos) 
-        //    System.out.println(p);
+        System.out.println(nova6);
 
-
-        System.out.println("\nMenores de 30 anos...");
-        novinhos.forEach( p->System.out.printf("\t-> %s\n",p.getNome()) );
-        System.out.println();
-  
+        System.out.println("\n7. Funcionários ordenados pela idade+nome:");
+        List<Pessoa> nova7 = lista.stream()
+                                  .sorted(Comparator.comparing(Pessoa:: getIdade)
+                                  .thenComparing( Pessoa::getNome)
+                                  )
+                                  .toList();
         
-      // List<String> l1=   lista.stream()
-      var l1=   lista.stream()
-             .filter((Pessoa p) -> p.getIdade() < 35)
-             .map( x -> x.getNome())
-             .collect( Collectors.toList() );
-             //.forEach( p -> System.out.println(p));
+        System.out.println(nova7);
 
-        l1.forEach( (String s) -> System.out.print(s + " "));     
-        System.out.println();
-
-        List<Double> resultado = lista.stream()
-                                    .filter((Pessoa p) -> p.getIdade() < 35)
-                                    .map( (Pessoa x) -> Math.pow(x.getIdade(), 3))
-                                    .collect( Collectors.toList() );
-
-          resultado.forEach( System.out::println );    
-          System.out.println();   
-
-
-     //List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 10, 12);
-     List<Integer> numbers = List.of(1, 2, 3, 4, 5, 6, 7, 8, 10, 12);
-     
-     List<Integer> twoEvenSquares = 
-           numbers.stream()
-                  .filter(n -> //n % 2 == 0
-                              {
-                                  System.out.println("filtering " + n);
-                                  return n % 2 == 0;
-                                }
-                                )
-                    .map(n -> {
-                                System.out.println("mapping " + n);
-                                return n * n;
-                              })
-                    .skip(2)              
-                    .limit(2)
-                    .collect(Collectors.toList());
-        System.out.println("\narray original");
-
-        numbers.forEach(System.out::println);
-
-        System.out.println("\nquadrado dos pares...");           
-        twoEvenSquares.forEach(System.out::println);
-
-        System.out.println();
-        //List<String> list = Arrays.asList("The", "Quick", "BROWN", "Fox", "Jumped", "Over", "The", "LAZY", "DOG"); 
-        List<String> list = List.of("The", "Quick", "BROWN", "Fox", "Jumped", "Over", "The", "LAZY", "DOG");     
-        var listUper = list.stream()
-                            .map( String::toUpperCase )
-                            //.map( (String s) -> String.toUpperCase(s) )
-                            .collect(  Collectors.toList());
+        System.out.println("\n8. Criar uma nova lista apenas com os funcionarios do financeiro:");
+        List<Pessoa> nova8 = lista.stream()
+                                  .filter(p -> p.getDpto() == Departamento.FINANCEIRO)
+                                  .toList();
         
-        System.out.println("\nLista em maiúsculas...");
-        listUper.forEach(System.out::println);
+        System.out.println(nova8);
 
-      long quatroMais = list.stream()
-                          .filter(s -> s.length() >= 4)
-                          .count();
+        System.out.println("\n9. Nome e setor da pessoa mais jovem:");
+        Pessoa nova9 = lista.stream()
+                            .map(Pessoa x -> {x.getIdade()})
+                            .min()
+                            .getAsInt()
+                            ;
+        
+        System.out.println(Pessoa);
 
-        System.out.println("\nNúmero de palavras com 4+ caracteres: "+ quatroMais);
-        System.out.println();
+
     }
 }

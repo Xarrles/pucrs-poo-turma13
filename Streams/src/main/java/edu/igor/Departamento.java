@@ -1,5 +1,5 @@
 package edu.igor;
 
 public enum Departamento {
-    FINANCEIRO, GERENCIA, VENDAS
+    FINANCEIRO, GERENCIA, VENDAS, X
 }
