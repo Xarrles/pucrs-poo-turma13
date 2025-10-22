@@ -1,4 +1,4 @@
-package aagustini.poo;
+package edu.igor;
 
 public class App {
 
